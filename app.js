@@ -43,7 +43,7 @@ app.use(function(req, res, next) {
     if (req.session.user){                
         var actual = new Date().getTime();                        
         if (req.session.transactionTime) {
-            if ( (actual - req.session.transactionTime) > (10 * 1000)){
+            if ( (actual - req.session.transactionTime) > (120 * 1000)){
                 delete req.session.user;
                 actual = undefined;
             }
