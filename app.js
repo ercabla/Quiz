@@ -39,6 +39,20 @@ app.use(function(req, res, next) {
     next();
 });
 
+app.use(function(req, res, next) {
+    if (req.session.user){                
+        var actual = new Date().getTime();                        
+        if (req.session.transactionTime) {
+            if ( (actual - req.session.transactionTime) > (10 * 1000)){
+                delete req.session.user;
+                actual = undefined;
+            }
+        }        
+        req.session.transactionTime = actual;
+    }
+    next();
+});
+
 
 app.use('/', routes);
 
